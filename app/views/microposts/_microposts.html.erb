@@ -10,9 +10,17 @@
         </div>
         <div>
           <p><%= micropost.content %></p>
-        </div>
-        <div><% if current_user == micropost.user %>
+          </div>
+        <div>
+        <% if current_user == micropost.user %>
           <%= link_to "Delete", micropost, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-xs' %>
+        <% end %>
+        <% if Favorite.find_by(user_id: current_user.id, micropost_id: micropost.id) %>
+          <!-- いいねしてる場合 -->
+          <%= link_to "Unfavorite", favorite_path(Favorite.find_by(user_id: current_user.id, micropost_id: micropost.id)), method: :delete, class: 'btn btn-danger btn-xs' %>
+        <% else %>
+          <!-- いいねしてない場合 -->
+          <%= link_to "Favorite", favorites_path(micropost_id: micropost.id), method: :post, class: 'btn btn-success btn-xs' %>
         <% end %>
         </div>
       </div>

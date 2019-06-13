@@ -36,6 +36,14 @@ class UsersController < ApplicationController
     @followers = @user.followers.page(params[:page])
     counts(@user)
   end
+  
+  def likes
+    #likes_user_path(current_user)のとき
+    # 主キーであるidの値が送られてくる。
+    @user = User.find(params[:id])
+    @favorite_microposts = @user.favorite_microposts.page(params[:page])
+    counts(@user)
+  end
 
   private
 
